@@ -1,0 +1,5 @@
+{
+  "name": "GenAI Platform Console",
+  "description": "A governed execution & inspection console for GenAI platform orchestration, featuring execution metrics, traces, and a developer-centric UI.",
+  "requestFramePermissions": []
+}
