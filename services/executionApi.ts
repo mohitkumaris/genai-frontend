@@ -13,20 +13,23 @@ export interface OrchestrationRequest {
 }
 
 export interface OrchestrationResponse {
-    execution_id: string;
-    status: string;
-    result: Record<string, unknown>;
-    metadata: {
-        agent: string;
-        routing_reason: string;
-        policy_status: 'PASS' | 'WARN' | 'FAIL';
-        latency_ms: number;
-        sla_tier: string;
-        cost_estimate: string;
+    request_id: string;
+    result: {
+        agent_name: string;
+        output: string;
         confidence: number;
-        tokens_used?: number;
+        metadata: {
+            routing?: {
+                reason?: string;
+                policy_influenced?: boolean;
+            };
+            tokens_used?: number;
+            latency_ms?: number;
+            sla_tier?: string;
+            cost_estimate?: string;
+            [key: string]: unknown;
+        };
     };
-    summary?: string;
 }
 
 /**

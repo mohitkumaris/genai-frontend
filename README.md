@@ -18,20 +18,19 @@ All intelligence lives in backend services (agents, policy, memory, cost, enforc
 ## Project Structure
 
 ```
-src/
-├── components/
-│   ├── Header.tsx
-│   ├── Footer.tsx
-│   ├── RequestSection.tsx
-│   ├── ResponseSection.tsx
-│   ├── HistoryView.tsx
-│   ├── InspectionPanel.tsx
-│   └── RawLogsView.tsx
-├── services/
-│   └── executionApi.ts      # Thin HTTP client ONLY
-├── types.ts                 # UI view models
-├── App.tsx
-└── index.tsx
+components/
+├── Header.tsx
+├── Footer.tsx
+├── RequestSection.tsx
+├── ResponseSection.tsx
+├── HistoryView.tsx
+├── InspectionPanel.tsx
+└── RawLogsView.tsx
+services/
+└── executionApi.ts      # Thin HTTP client ONLY
+types.ts                 # UI view models
+App.tsx
+index.tsx
 ```
 
 ## Run Locally

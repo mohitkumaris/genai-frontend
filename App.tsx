@@ -24,26 +24,30 @@ const App: React.FC = () => {
       const response = await orchestrate({ prompt, session_id: SESSION_ID });
       const endTime = Date.now();
 
+      // Map orchestrator response to frontend structure
+      const result = response.result;
+      const routingMeta = result.metadata?.routing || {};
+
       const newLog: ExecutionLog = {
-        id: response.execution_id,
+        id: response.request_id,
         sessionId: SESSION_ID,
         timestamp: Date.now(),
         prompt: prompt,
         duration: endTime - startTime,
         output: {
-          status: response.status,
-          agent: response.metadata.agent,
-          routing_reason: response.metadata.routing_reason,
-          policy_status: response.metadata.policy_status,
-          tokens_used: response.metadata.tokens_used ?? 0,
-          latency_ms: response.metadata.latency_ms,
-          confidence: response.metadata.confidence,
-          sla_tier: response.metadata.sla_tier,
-          cost_estimate: response.metadata.cost_estimate,
-          execution_id: response.execution_id,
-          result: response.result,
+          status: 'success',
+          agent: result.agent_name,
+          routing_reason: routingMeta.reason || 'N/A',
+          policy_status: routingMeta.policy_influenced ? 'WARN' : 'PASS',
+          tokens_used: result.metadata?.tokens_used ?? 0,
+          latency_ms: result.metadata?.latency_ms ?? (endTime - startTime),
+          confidence: result.confidence,
+          sla_tier: result.metadata?.sla_tier ?? 'default',
+          cost_estimate: result.metadata?.cost_estimate ?? 'N/A',
+          execution_id: response.request_id,
+          result: { output: result.output },
         },
-        summaryText: response.summary ?? 'Execution completed.'
+        summaryText: result.output
       };
 
       setCurrentExecution(newLog);
